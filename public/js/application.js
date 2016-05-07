@@ -3,27 +3,27 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider
 		.state('home', {
 			url: '/',
-			templateUrl: 'views/home.html',
+			templateUrl: 'public/views/home.html',
 			data : { pageTitle: 'Home' }
 		})
 		.state('course', {
 			url: '/course/:courseId',
-			templateUrl: 'views/course.html',
+			templateUrl: 'public/views/course.html',
 			data : { pageTitle: '.....' }
 		})
 		.state('regist', {
 			url: '/regist',
-			templateUrl: 'views/regist.html',
+			templateUrl: 'public/views/regist.html',
 			data : { pageTitle: 'Registration' }
 		})
 		.state('profile', {
 			url: '/profile',
-			templateUrl: 'views/profile.html',
+			templateUrl: 'public/views/profile.html',
 			data : { pageTitle: 'Profile' }
 		})
 		.state('login', {
 			url: '/login',
-			templateUrl: 'views/login.html',
+			templateUrl: 'public/views/login.html',
 			data : { pageTitle: 'Login' }
 		});
 	$urlRouterProvider.otherwise('/');
@@ -38,6 +38,6 @@ function ($rootScope, $state, $stateParams) {
 app.directive('navbarView', function(){
     return {
         restrict: 'E',
-        templateUrl: 'views/navbar.html'
+        templateUrl: 'public/views/navbar.html'
       };
 });
