@@ -1,0 +1,78 @@
+<div ng-controller="profileCtrl">
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <h4>
+        Student Profile
+      </h4>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-2"><b>Student ID No.: </b></div>
+        <div class="col-md-2">{{studentIdRoot}}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"><b>First Name: </b></div>
+        <div class="col-md-2">John</div>
+        <div class="col-md-2"><b>Last Name: </b></div>
+        <div class="col-md-2">Doe</div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"><b>Degree level: </b></div>
+        <div class="col-md-2">Bachelor </div>
+        <div class="col-md-2"><b>Campus </b></div>
+        <div class="col-md-2">Bangkhen</div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"><b>Faculty </b></div>
+        <div class="col-md-2">Engineering</div>
+        <div class="col-md-2"><b>Department </b></div>
+        <div class="col-md-4">Software & Knowledge Engineering(E17) </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"><b>Year </b></div>
+        <div class="col-md-2">3 (E17-3)</div>
+        <div class="col-md-2"><b>Status </b></div>
+        <div class="col-md-2">Currently studying</div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <h4>
+        Registration Report
+      </h4>
+    </div>
+    <div class="panel-body">
+      <div class="row" ng-repeat="en in profile.enrolls">
+        <div class="col-md-offset-1 col-md-10">
+          <h4>{{en.semester}} Semester {{en.year}}</h4>
+          <table class="table table-reflow">
+            <thead>
+              <tr>
+                <th>Course Code</th>
+                <th>Course Title</th>
+                <th>Lecture Section</th>
+                <th>Lab Section</th>
+                <th>Type</th>
+                <th>Credit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="c in en.courses">
+                <td>{{c.courseId}}</td>
+                <td>{{c.name}}</td>
+                <td align="center">{{c.section.lecture || 0}}</td>
+                <td align="center">{{c.section.lab || 0}}</td>
+                <td align="center">{{c.rType}}</td>
+                <td align="center">{{c.credit}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+
+</div>

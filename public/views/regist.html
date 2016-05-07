@@ -1,0 +1,105 @@
+<div ng-controller="registCtrl">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+                      Select Course : <input ng-model="searchText">
+                    </h3>
+        </div>
+        <div class="panel-body">
+          <a class="list" ng-repeat="c in courses | filter:searchText" ng-click="selectCourse(c)">
+              {{c.id}} - {{c.name.en}}<br>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+              <span>Registration</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+            <b>Academic Year:</b> Second Semester / 2015<br>
+            <b>Total Credits:</b> {{totalCredits}}/22
+            <hr>
+          <div ng-if="search === true">
+            <h3 class="row">
+              <div class="col-md-8">{{course.name.en}}</div>
+              <div class="col-md-4">Credits : {{courseCredit}}</div>
+            </h3>
+             <br>
+            <table class="table table-reflow" ng-show="selected.length > 0">
+              <thead>
+                <tr>
+                  <th>Section</th>
+                  <th>Course Type</th>
+                  <th>Date</th>
+                  <th>Location</th>
+                  <th>Enrolled</th>
+                  <th>Instructor</th>
+                  <th ng-if="studentIdRoot !== ''">Enroll</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="s in selected">
+                  <td>{{s.id}}</td>
+                  <td>{{s.type}}</td>
+                  <td>{{s.date}}</td>
+                  <td>{{s.location}}</td>
+                  <td>{{s.enrolled}}/{{s.accept}}</td>
+                  <td>{{s.instructors[0]}}</td>
+                  <td align="center" ng-if="studentIdRoot !== ''">
+                     <button ng-if="checkEnroll[course.id] === undefined" class="btn btn-primary"
+                         data-toggle="modal" data-target="#enrollModal" ng-click="selectSec(s)">Enroll</button>
+                    <span ng-if="checkEnroll[course.id] !== undefined && checkEnroll[course.id] === s.id"
+                          class="glyphicon glyphicon-ok" style="color: green;"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div ng-if="selected.length === 0">
+              Not opened in this semester
+            </div>
+          </div>
+
+          <div ng-if="search === false">
+            Please select the course
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="enrollModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Enroll</h4>
+              </div>
+              <div class="modal-body">
+                <b>Course Code:</b> {{course.id}}<br>
+                <b>Name:</b> {{course.name.en}}<br>
+                <b>Section:</b> {{section.id}}<br>
+                <b>Type:</b> {{section.type}}<br>
+                <b>Credit:</b> {{courseCredit}}<br>
+                <b>Credit / Audit:</b>
+                <label class="checkbox-inline">
+                  <input type="radio" value="C" ng-model="rType"> Credit
+                  <input type="radio" value="A" ng-model="rType"> Audit
+                </label>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-success" ng-click="enroll()" data-dismiss="modal">Enroll</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

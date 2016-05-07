@@ -1,0 +1,39 @@
+{
+  "name": "bookie",
+  "version": "1.0.0",
+  "description": "Bookie Website",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "body-parser": "~1.15.0",
+    "browser-sync": "^2.9.10",
+    "ejs": "^2.3.4",
+    "errorhandler": "^1.4.2",
+    "express": "^4.13.3",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-concat-css": "^2.2.0",
+    "morgan": "^1.7.0",
+    "requirejs": "^2.1.20",
+    "mongoose": "~4.4.14",
+    "compression": "~1.6.0"
+  },
+  "devDependencies": {
+    "gulp-install": "^0.6.0"
+  },
+  "scripts": {
+    "start" : "node node-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bookie-TSP/Bookie-FrontEnd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bookie-TSP/Bookie-FrontEnd/issues"
+  },
+  "homepage": "https://github.com/Bookie-TSP/Bookie-FrontEnd#readme"
+}
