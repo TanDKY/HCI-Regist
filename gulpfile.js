@@ -40,9 +40,8 @@ gulp.task('default', ['scripts', 'styles', 'libaryScripts'], function () {
 	gulp.watch(['public/css/assets/*.css'], ['styles']);
 	browserSync.init({
 		port: 8000,
-		server: {
-			baseDir: "./public"
-		}
+		server: './'
+
 	});
 });
 
