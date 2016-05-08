@@ -1,36 +1,49 @@
 <div ng-controller="registCtrl">
   <div class="row">
     <div class="col-md-4">
-      <div class="panel panel-default">
+      <div class="panel panel-success">
         <div class="panel-heading">
           <h3 class="panel-title">
                       Select Course : <input ng-model="searchText">
                     </h3>
         </div>
         <div class="panel-body">
-          <a class="list" ng-repeat="c in courses | filter:searchText" ng-click="selectCourse(c)">
-              {{c.id}} - {{c.name.en}}<br>
-          </a>
+          <div class="hover">
+            <table class="table table-striped">
+              <tbody>
+                <tr class="list" ng-repeat="c in courses | filter:searchText" ng-click="selectCourse(c)">
+                  <td>{{c.id}}</td>
+                  <td>{{c.name.en}}</td>
+                </tr>
+              </tbody>
+            </table>
         </div>
+      </div>
       </div>
     </div>
 
     <div class="col-md-8">
-      <div class="panel panel-default">
+      <div class="panel panel-success">
         <div class="panel-heading">
           <h3 class="panel-title">
-              <span>Registration</span>
+              Registration
           </h3>
         </div>
         <div class="panel-body">
-            <b>Academic Year:</b> Second Semester / 2015<br>
-            <b>Total Credits:</b> {{totalCredits}}/22
+            <h4><b>Academic Year:</b> Second Semester / 2015
+              <span ng-if="studentIdRoot !== ''">
+                <br><br>
+                <b>Total Credits:</b> {{totalCredits}}/22
+              </span>
+            </h4>
             <hr>
           <div ng-if="search === true">
             <h3 class="row">
               <div class="col-md-8">{{course.name.en}}</div>
               <div class="col-md-4">Credits : {{courseCredit}}</div>
             </h3>
+            (<a ui-sref="course({courseId : course.id})">See Description</a>)
+             <br>
              <br>
             <table class="table table-reflow" ng-show="selected.length > 0">
               <thead>
@@ -62,14 +75,15 @@
               </tbody>
             </table>
 
-            <div ng-if="selected.length === 0">
+            <h4 ng-if="selected.length === 0">
               Not opened in this semester
-            </div>
+              <hr>
+            </h4>
           </div>
 
-          <div ng-if="search === false">
+          <h3 align="center" ng-if="search === false">
             Please select the course
-          </div>
+          </h3>
 
         </div>
       </div>

@@ -4,7 +4,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 		.state('home', {
 			url: '/',
 			templateUrl: 'public/views/home.html',
-			data : { pageTitle: 'Home' }
+			data : { pageTitle: 'Course Description' }
 		})
 		.state('course', {
 			url: '/course/:courseId',

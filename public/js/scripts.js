@@ -4,7 +4,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 		.state('home', {
 			url: '/',
 			templateUrl: 'public/views/home.html',
-			data : { pageTitle: 'Home' }
+			data : { pageTitle: 'Course Description' }
 		})
 		.state('course', {
 			url: '/course/:courseId',
@@ -74,7 +74,7 @@ app.controller('homeCtrl', ['$scope', '$http',
 
 app.controller('loginCtrl', ['$scope', '$http', '$rootScope', '$localStorage', '$state',
     function($scope, $http, $rootScope, $localStorage, $state) {
-      if ( $localStorage.studentId !== '') {
+      if ( $localStorage.studentId !== undefined && $localStorage.studentId !== '' ) {
 			     $state.go('home');
 		  }
         $rootScope.studentId = '';
@@ -137,8 +137,22 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope',
       console.log(data);
     })
     .error(function(data){
-      console.log(data);
     });
+
+    $scope.drop = function(c){
+      var index = $scope.profile.enrolls[0].courses.indexOf(c);
+      $scope.profile.enrolls[0].courses.splice(index, 1);
+      var jsonVar = {};
+      jsonVar[loginId] = $scope.profile;
+      $http.post('http://52.37.98.127:3000/v1/5610545749/?pin=5647', jsonVar)
+          .success(function(data) {
+              console.log(data);
+          })
+          .error(function(data) {
+              console.log(data);
+          });
+
+    };
 }]);
 
 'use strict';
@@ -160,7 +174,7 @@ app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', 
           $http.get('http://52.37.98.127:3000/v1/5610545749/' + loginId + '?pin=5647')
               .success(function(data) {
                 var totalEnroll = data.enrolls[0].courses;
-    
+
                 for(var i = 0; i < totalEnroll.length; i++){
                   var en = totalEnroll[i];
                   $scope.checkEnroll[en.courseId] = en.section.lecture || en.section.lab;
@@ -172,10 +186,8 @@ app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', 
               });
         };
 
-        if ( $localStorage.studentId === '') {
-             $state.go('home');
-        }
-        else{
+
+        if( $localStorage.studentId && $localStorage.studentId !== ''){
           $scope.updateChecker();
         }
 
@@ -262,7 +274,7 @@ app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', 
                             console.log(data);
                             $scope.updateChecker();
                         })
-                        .error(function(date) {
+                        .error(function(data) {
                             console.log(data);
                         });
                 });

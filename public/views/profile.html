@@ -6,34 +6,40 @@
       </h4>
     </div>
     <div class="panel-body">
-      <div class="row">
-        <div class="col-md-2"><b>Student ID No.: </b></div>
-        <div class="col-md-2">{{studentIdRoot}}</div>
-      </div>
-      <div class="row">
-        <div class="col-md-2"><b>First Name: </b></div>
-        <div class="col-md-2">John</div>
-        <div class="col-md-2"><b>Last Name: </b></div>
-        <div class="col-md-2">Doe</div>
-      </div>
-      <div class="row">
-        <div class="col-md-2"><b>Degree level: </b></div>
-        <div class="col-md-2">Bachelor </div>
-        <div class="col-md-2"><b>Campus </b></div>
-        <div class="col-md-2">Bangkhen</div>
-      </div>
-      <div class="row">
-        <div class="col-md-2"><b>Faculty </b></div>
-        <div class="col-md-2">Engineering</div>
-        <div class="col-md-2"><b>Department </b></div>
-        <div class="col-md-4">Software & Knowledge Engineering(E17) </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2"><b>Year </b></div>
-        <div class="col-md-2">3 (E17-3)</div>
-        <div class="col-md-2"><b>Status </b></div>
-        <div class="col-md-2">Currently studying</div>
-      </div>
+      <table class="table table-striped">
+				<tbody>
+					<tr>
+						<td><b>Student ID No: </b></td>
+						<td>{{studentIdRoot}}</td>
+            <td></td>
+              <td></td>
+					</tr>
+          <tr>
+            <td><b>First Name: </b></td>
+            <td>John</td>
+            <td><b>Last Name: </b></td>
+            <td>Doe</td>
+          </tr>
+          <tr>
+            <td><b>Degree level: </b></td>
+            <td>Bachelor</td>
+            <td><b>Campus:</b></td>
+            <td>Bangkhen</td>
+          </tr>
+          <tr>
+            <td><b>Faculty: </b></td>
+            <td>Engineering</td>
+            <td><b>Department:</b></td>
+            <td>Software & Knowledge Engineering (E17) </td>
+          </tr>
+          <tr>
+            <td><b>Year: </b></td>
+            <td>3 (E17-3)</td>
+            <td><b>Status: </b></td>
+            <td>Currently studying</td>
+          </tr>
+				</tbody>
+			</table>
     </div>
   </div>
   <hr>
@@ -47,9 +53,11 @@
       <div class="row" ng-repeat="en in profile.enrolls">
         <div class="col-md-offset-1 col-md-10">
           <h4>{{en.semester}} Semester {{en.year}}</h4>
-          <table class="table table-reflow">
+          <div class="hover">
+          <table class="table table-striped" ng-if="en.courses.length > 0">
             <thead>
               <tr>
+                <th>No.</th>
                 <th>Course Code</th>
                 <th>Course Title</th>
                 <th>Lecture Section</th>
@@ -60,15 +68,22 @@
             </thead>
             <tbody>
               <tr ng-repeat="c in en.courses">
+                <td>{{en.courses.indexOf(c)+1}}</td>
                 <td>{{c.courseId}}</td>
                 <td>{{c.name}}</td>
                 <td align="center">{{c.section.lecture || 0}}</td>
                 <td align="center">{{c.section.lab || 0}}</td>
                 <td align="center">{{c.rType}}</td>
                 <td align="center">{{c.credit}}</td>
+                <td><button class="btn btn-danger btn-sm" ng-click="drop(c)">Drop</button></td>
               </tr>
             </tbody>
           </table>
+        </div>
+          <h3 ng-if="en.courses.length === 0" align="center">
+            <hr>
+            No enrolled course in this semester
+          </h3>
         </div>
       </div>
       <hr>

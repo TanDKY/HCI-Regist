@@ -2,7 +2,7 @@
 
 app.controller('loginCtrl', ['$scope', '$http', '$rootScope', '$localStorage', '$state',
     function($scope, $http, $rootScope, $localStorage, $state) {
-      if ( $localStorage.studentId !== '') {
+      if ( $localStorage.studentId !== undefined && $localStorage.studentId !== '' ) {
 			     $state.go('home');
 		  }
         $rootScope.studentId = '';

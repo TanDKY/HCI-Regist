@@ -17,7 +17,7 @@ app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', 
           $http.get('http://52.37.98.127:3000/v1/5610545749/' + loginId + '?pin=5647')
               .success(function(data) {
                 var totalEnroll = data.enrolls[0].courses;
-    
+
                 for(var i = 0; i < totalEnroll.length; i++){
                   var en = totalEnroll[i];
                   $scope.checkEnroll[en.courseId] = en.section.lecture || en.section.lab;
@@ -29,10 +29,8 @@ app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', 
               });
         };
 
-        if ( $localStorage.studentId === '') {
-             $state.go('home');
-        }
-        else{
+
+        if( $localStorage.studentId && $localStorage.studentId !== ''){
           $scope.updateChecker();
         }
 
@@ -119,7 +117,7 @@ app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', 
                             console.log(data);
                             $scope.updateChecker();
                         })
-                        .error(function(date) {
+                        .error(function(data) {
                             console.log(data);
                         });
                 });

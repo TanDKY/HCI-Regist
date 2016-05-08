@@ -1,4 +1,5 @@
-.list:hover{
+.hover>.table-striped>tbody>tr:hover{
   cursor: hand;
   cursor: pointer;
+  background-color: lightgrey;
 }

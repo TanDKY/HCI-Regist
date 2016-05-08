@@ -1,4 +1,15 @@
-.list:hover {
+#form {
+  margin-left: 30%;
+  margin-top: 5%;
+  width: 70%;
+}
+.nav>li>a:hover:hover {
+  background-color: black;
   cursor: hand;
   cursor: pointer;
+}
+.hover>.table-striped>tbody>tr:hover {
+  cursor: hand;
+  cursor: pointer;
+  background-color: lightgrey;
 }
