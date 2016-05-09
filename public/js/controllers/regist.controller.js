@@ -37,9 +37,9 @@ app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', 
 
         $scope.selectCourse = function(course) {
             $scope.course = course;
-
             $http.get('https://whsatku.github.io/skecourses/' + course.id + '.json')
                 .success(function(data) {
+                    $scope.courseA = data;
                     $scope.courseCredit = data.credit.total;
                     console.log(data);
                 });

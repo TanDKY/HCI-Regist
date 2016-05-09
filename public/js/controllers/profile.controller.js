@@ -2,7 +2,7 @@
 
 app.controller('profileCtrl', ['$scope', '$http', '$rootScope',
   function ($scope, $http, $rootScope) {
-    $scope.profile = {};
+    //$scope.profile = {};
     var loginId = $rootScope.studentIdRoot;
 
     $http.get('http://52.37.98.127:3000/v1/5610545749/'+ loginId +'?pin=5647')
@@ -11,6 +11,7 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope',
       console.log(data);
     })
     .error(function(data){
+      $scope.profile = null;
     });
 
     $scope.drop = function(c){

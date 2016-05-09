@@ -50,7 +50,12 @@
       </h4>
     </div>
     <div class="panel-body">
-      <div class="row" ng-repeat="en in profile.enrolls">
+      <div class="row" ng-if="profile === null">
+        <h3 align="center">
+          No enrolled course in any semester
+        </h3>
+      </div>
+      <div class="row" ng-repeat="en in profile.enrolls" ng-if="profile.enrolls">
         <div class="col-md-offset-1 col-md-10">
           <h3>{{en.semester}} Semester {{en.year}}
             <button class="btn btn-sm btn-warning pull-right" data-toggle="modal" data-target="#exportModal" ng-click="export(en)"style="margin-bottom: 2%;">Export JSON</button>
@@ -66,6 +71,7 @@
                   <th>Lab Section</th>
                   <th>Type</th>
                   <th>Credit</th>
+                  <th>Grade</th>
                   <th></th>
                 </tr>
               </thead>
@@ -78,6 +84,7 @@
                   <td align="center">{{c.section.lab || 0}}</td>
                   <td align="center">{{c.rType}}</td>
                   <td align="center">{{c.credit}}</td>
+                  <td align="center">{{c.grade}}</td>
                   <td>
                     <button class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#dropModal" ng-click="selectDrop(c)">Drop</button>
                   </td>

@@ -5,7 +5,7 @@ var browserSync = require('browser-sync')
 	.create();
 
 gulp.task('scripts', function () {
-	return gulp.src(['public/js/application.js', 'public/js/controllers/*.js', 'public/js/factories/*.js'])
+	return gulp.src(['public/js/application.js', 'public/js/controllers/*.js'])
 		.pipe(concat('scripts.js'))
 		.pipe(gulp.dest('public/js/'));
 });

@@ -17,8 +17,8 @@
                 </tr>
               </tbody>
             </table>
+          </div>
         </div>
-      </div>
       </div>
     </div>
 
@@ -30,21 +30,22 @@
           </h3>
         </div>
         <div class="panel-body">
-            <h4><b>Academic Year:</b> Second Semester / 2015
+          <h4><b>Academic Year:</b> Second Semester / 2015
               <span ng-if="studentIdRoot !== ''">
                 <br><br>
                 <b>Total Credits:</b> {{totalCredits}}/22
               </span>
             </h4>
-            <hr>
+          <hr>
           <div ng-if="search === true">
             <h3 class="row">
-              <div class="col-md-8">{{course.name.en}}</div>
-              <div class="col-md-4">Credits : {{courseCredit}}</div>
+              <div class="col-md-9">{{course.name.en}}</div>
+              <div class="col-md-1">
+                <button class="btn btn-warning" data-toggle="modal" data-target="#descriptionModal">See Description</button>
+              </div>
             </h3>
-            (<a ui-sref="course({courseId : course.id})">See Description</a>)
-             <br>
-             <br>
+            <h4>Credits : {{courseCredit}}</h4>
+            <br>
             <table class="table table-reflow" ng-show="selected.length > 0">
               <thead>
                 <tr>
@@ -66,10 +67,8 @@
                   <td>{{s.enrolled}}/{{s.accept}}</td>
                   <td>{{s.instructors[0]}}</td>
                   <td align="center" ng-if="studentIdRoot !== ''">
-                     <button ng-if="checkEnroll[course.id] === undefined" class="btn btn-primary"
-                         data-toggle="modal" data-target="#enrollModal" ng-click="selectSec(s)">Enroll</button>
-                    <span ng-if="checkEnroll[course.id] !== undefined && checkEnroll[course.id] === s.id"
-                          class="glyphicon glyphicon-ok" style="color: green;"></span>
+                    <button ng-if="checkEnroll[course.id] === undefined" class="btn btn-primary" data-toggle="modal" data-target="#enrollModal" ng-click="selectSec(s)">Enroll</button>
+                    <span ng-if="checkEnroll[course.id] !== undefined && checkEnroll[course.id] === s.id" class="glyphicon glyphicon-ok" style="color: green;"></span>
                   </td>
                 </tr>
               </tbody>
@@ -79,6 +78,12 @@
               Not opened in this semester
               <hr>
             </h4>
+
+            <h3 align="center" ng-if="studentIdRoot === ''">
+              <hr>
+              Please login to enroll
+                <hr>
+            </h3>
           </div>
 
           <h3 align="center" ng-if="search === false">
@@ -91,29 +96,70 @@
   </div>
 
   <div class="modal fade" id="enrollModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel">Enroll</h4>
-              </div>
-              <div class="modal-body">
-                <b>Course Code:</b> {{course.id}}<br>
-                <b>Name:</b> {{course.name.en}}<br>
-                <b>Section:</b> {{section.id}}<br>
-                <b>Type:</b> {{section.type}}<br>
-                <b>Credit:</b> {{courseCredit}}<br>
-                <b>Credit / Audit:</b>
-                <label class="checkbox-inline">
-                  <input type="radio" value="C" ng-model="rType"> Credit
-                  <input type="radio" value="A" ng-model="rType"> Audit
-                </label>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-success" ng-click="enroll()" data-dismiss="modal">Enroll</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              </div>
-          </div>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Enroll</h4>
+        </div>
+        <div class="modal-body">
+          <b>Course Code:</b> {{course.id}}
+          <br>
+          <b>Name:</b> {{course.name.en}}
+          <br>
+          <b>Section:</b> {{section.id}}
+          <br>
+          <b>Type:</b> {{section.type}}
+          <br>
+          <b>Credit:</b> {{courseCredit}}
+          <br>
+          <b>Credit / Audit:</b>
+          <label class="checkbox-inline">
+            <input type="radio" value="C" ng-model="rType"> Credit
+            <input type="radio" value="A" ng-model="rType"> Audit
+          </label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" ng-click="enroll()" data-dismiss="modal">Enroll</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3>{{course.id}} - {{course.name.th}} ({{course.name.en}})</h3>
+            </div>
+            <div class="panel-body">
+              <h4>
+                  Credits : {{courseA.credit.total}} ({{courseA.credit.lecture}}-{{courseA.credit.lab}}-{{courseA.credit.self}})
+              </h4>
+              <div class="row" ng-if="courseA.prereq">
+                <h5>
+                <div class="col-md-2">
+                  Prerequisite:
+                </div>
+                <div ng-class="{ courseA.prereq.indexOf(pre) === 0 ? 'col-md-10': 'col-md-offset-2 col-md-10'}"ng-repeat="pre in courseA.prereq">
+                  {{pre.id}} - {{courses[coursesId.indexOf(pre.id)].name.en}}
+                </div>
+              </h5>
+              </div>
+              <br> {{courseA.description.th}}
+              <br>
+              <br> {{courseA.description.en}}
+              <br>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

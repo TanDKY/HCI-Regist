@@ -1,16 +1,6 @@
 var app = angular.module('app', ['ui.router', 'ngStorage', 'ui.bootstrap', 'ngCookies']);
 app.config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider
-		.state('home', {
-			url: '/',
-			templateUrl: 'public/views/home.html',
-			data : { pageTitle: 'Course Description' }
-		})
-		.state('course', {
-			url: '/course/:courseId',
-			templateUrl: 'public/views/course.html',
-			data : { pageTitle: '.....' }
-		})
 		.state('regist', {
 			url: '/regist',
 			templateUrl: 'public/views/regist.html',
@@ -26,7 +16,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: 'public/views/login.html',
 			data : { pageTitle: 'Login' }
 		});
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/regist');
 });
 
 app.run([ '$rootScope', '$state', '$stateParams',
@@ -44,38 +34,10 @@ app.directive('navbarView', function(){
 
 'use strict';
 
-app.controller('courseCtrl', ['$scope', '$http', '$stateParams',
-  function ($scope, $http, $stateParams) {
-    var courseId = $stateParams.courseId;
-    $scope.courseInfo = {};
-    $http.get('https://whsatku.github.io/skecourses/'+ courseId +'.json')
-    .success(function(data){
-      $scope.courseInfo = data;
-      console.log(data);
-    })
-    .error(function(data){
-      console.log(data);
-    });
-}]);
-
-app.controller('homeCtrl', ['$scope', '$http',
-  function ($scope, $http) {
-    $scope.courses = [];
-    $http.get('https://whsatku.github.io/skecourses/list.json')
-    .success(function (data) {
-        $scope.courses = data;
-      })
-      .error(function (data) {
-        console.log(data);
-      });
-}]);
-
-'use strict';
-
 app.controller('loginCtrl', ['$scope', '$http', '$rootScope', '$localStorage', '$state',
     function($scope, $http, $rootScope, $localStorage, $state) {
       if ( $localStorage.studentId !== undefined && $localStorage.studentId !== '' ) {
-			     $state.go('home');
+			     $state.go('regist');
 		  }
         $rootScope.studentId = '';
         $scope.id = '';
@@ -92,11 +54,15 @@ app.controller('loginCtrl', ['$scope', '$http', '$rootScope', '$localStorage', '
 app.controller('mainCtrl', ['$scope', '$http', '$rootScope', '$localStorage',
     function($scope, $http, $rootScope, $localStorage) {
         $scope.courses = [];
+        $scope.coursesId = [];
         $rootScope.studentIdRoot = $localStorage.studentId || '';
 
         $http.get('https://whsatku.github.io/skecourses/list.json')
             .success(function(data) {
                 $scope.courses = data;
+                for(var i = 0; i < $scope.courses.length; i++){
+                  $scope.coursesId.push($scope.courses[i].id);
+                }
             })
             .error(function(data) {
                 console.log(data);
@@ -128,7 +94,7 @@ app.controller('navCtrl', ['$scope', '$http', '$rootScope',
 
 app.controller('profileCtrl', ['$scope', '$http', '$rootScope',
   function ($scope, $http, $rootScope) {
-    $scope.profile = {};
+    //$scope.profile = {};
     var loginId = $rootScope.studentIdRoot;
 
     $http.get('http://52.37.98.127:3000/v1/5610545749/'+ loginId +'?pin=5647')
@@ -137,6 +103,7 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope',
       console.log(data);
     })
     .error(function(data){
+      $scope.profile = null;
     });
 
     $scope.drop = function(c){
@@ -202,9 +169,9 @@ app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', 
 
         $scope.selectCourse = function(course) {
             $scope.course = course;
-
             $http.get('https://whsatku.github.io/skecourses/' + course.id + '.json')
                 .success(function(data) {
+                    $scope.courseA = data;
                     $scope.courseCredit = data.credit.total;
                     console.log(data);
                 });

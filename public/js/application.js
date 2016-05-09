@@ -1,16 +1,6 @@
 var app = angular.module('app', ['ui.router', 'ngStorage', 'ui.bootstrap', 'ngCookies']);
 app.config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider
-		.state('home', {
-			url: '/',
-			templateUrl: 'public/views/home.html',
-			data : { pageTitle: 'Course Description' }
-		})
-		.state('course', {
-			url: '/course/:courseId',
-			templateUrl: 'public/views/course.html',
-			data : { pageTitle: '.....' }
-		})
 		.state('regist', {
 			url: '/regist',
 			templateUrl: 'public/views/regist.html',
@@ -26,7 +16,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: 'public/views/login.html',
 			data : { pageTitle: 'Login' }
 		});
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/regist');
 });
 
 app.run([ '$rootScope', '$state', '$stateParams',
