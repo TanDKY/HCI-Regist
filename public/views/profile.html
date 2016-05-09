@@ -7,13 +7,13 @@
     </div>
     <div class="panel-body">
       <table class="table table-striped">
-				<tbody>
-					<tr>
-						<td><b>Student ID No: </b></td>
-						<td>{{studentIdRoot}}</td>
+        <tbody>
+          <tr>
+            <td><b>Student ID No: </b></td>
+            <td>{{studentIdRoot}}</td>
             <td></td>
-              <td></td>
-					</tr>
+            <td></td>
+          </tr>
           <tr>
             <td><b>First Name: </b></td>
             <td>John</td>
@@ -38,8 +38,8 @@
             <td><b>Status: </b></td>
             <td>Currently studying</td>
           </tr>
-				</tbody>
-			</table>
+        </tbody>
+      </table>
     </div>
   </div>
   <hr>
@@ -52,34 +52,39 @@
     <div class="panel-body">
       <div class="row" ng-repeat="en in profile.enrolls">
         <div class="col-md-offset-1 col-md-10">
-          <h4>{{en.semester}} Semester {{en.year}}</h4>
+          <h3>{{en.semester}} Semester {{en.year}}
+            <button class="btn btn-sm btn-warning pull-right" data-toggle="modal" data-target="#exportModal" ng-click="export(en)"style="margin-bottom: 2%;">Export JSON</button>
+          </h3>
           <div class="hover">
-          <table class="table table-striped" ng-if="en.courses.length > 0">
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Course Code</th>
-                <th>Course Title</th>
-                <th>Lecture Section</th>
-                <th>Lab Section</th>
-                <th>Type</th>
-                <th>Credit</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="c in en.courses">
-                <td>{{en.courses.indexOf(c)+1}}</td>
-                <td>{{c.courseId}}</td>
-                <td>{{c.name}}</td>
-                <td align="center">{{c.section.lecture || 0}}</td>
-                <td align="center">{{c.section.lab || 0}}</td>
-                <td align="center">{{c.rType}}</td>
-                <td align="center">{{c.credit}}</td>
-                <td><button class="btn btn-danger btn-sm" ng-click="drop(c)">Drop</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+            <table class="table table-striped" ng-if="en.courses.length > 0">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Course Code</th>
+                  <th>Course Title</th>
+                  <th>Lecture Section</th>
+                  <th>Lab Section</th>
+                  <th>Type</th>
+                  <th>Credit</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="c in en.courses">
+                  <td>{{en.courses.indexOf(c)+1}}</td>
+                  <td>{{c.courseId}}</td>
+                  <td>{{c.name}}</td>
+                  <td align="center">{{c.section.lecture || 0}}</td>
+                  <td align="center">{{c.section.lab || 0}}</td>
+                  <td align="center">{{c.rType}}</td>
+                  <td align="center">{{c.credit}}</td>
+                  <td>
+                    <button class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#dropModal" ng-click="selectDrop(c)">Drop</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <h3 ng-if="en.courses.length === 0" align="center">
             <hr>
             No enrolled course in this semester
@@ -90,4 +95,54 @@
     </div>
   </div>
 
+  <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Export JSON</h4>
+        </div>
+        <div class="modal-body">
+          <label>{{exportEnroll.semester}} Semester {{exportEnroll.year}}</label>
+          <br>
+          <div class="form-group">
+            <label>JSON:</label>
+            <textarea class="form-control" rows="5" readonly>{{exportEnroll.courses}}</textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="dropModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Drop course</h4>
+              </div>
+              <div class="modal-body">
+                <b>Course Code:</b> {{dropCourse.courseId}}<br>
+                <b>Name:</b> {{dropCourse.name}}<br>
+                <b>Section:</b> <br>
+
+                <div ng-if="dropCourse.section.lecture !== 0">
+                  <b style="margin-left: 20px;">Lecture:</b> {{dropCourse.section.lecture || 0}}
+                </div>
+                <div ng-if="dropCourse.section.lab !== 0">
+                  <b style="margin-left: 20px;">Lab:</b> {{dropCourse.section.lab || 0}}<br>
+                </div>
+                <b>Credit:</b> {{dropCourse.credit}}<br>
+                <b>Credit / Audit:</b> {{dropCourse.rType}}<br>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" ng-click="drop(dropCourse)" data-dismiss="modal">Drop</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>

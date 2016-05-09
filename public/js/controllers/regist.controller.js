@@ -6,7 +6,7 @@ app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', 
         $scope.search = false;
         $scope.course = {};
         $scope.courseCredit = 0;
-        $scope.rType = 'C';
+        $scope.rType = '';
         $scope.checkEnroll = {};
         $scope.totalCredits = 0;
 

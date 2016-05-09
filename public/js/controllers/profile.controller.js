@@ -27,4 +27,12 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope',
           });
 
     };
+
+    $scope.selectDrop = function(c){
+      $scope.dropCourse = c;
+    };
+
+    $scope.export = function(enroll){
+      $scope.exportEnroll = enroll;
+    };
 }]);
