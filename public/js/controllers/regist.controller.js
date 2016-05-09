@@ -1,7 +1,7 @@
 'use strict';
 
-app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', '$state',
-    function($scope, $http, $rootScope, $localStorage, $state) {
+app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', '$state', '$location', '$anchorScroll',
+    function($scope, $http, $rootScope, $localStorage, $state, $location, $anchorScroll) {
         $scope.selected = [];
         $scope.search = false;
         $scope.course = {};
@@ -54,6 +54,8 @@ app.controller('registCtrl', ['$scope', '$http', '$rootScope', '$localStorage', 
                     //console.log(data);
                 });
             $scope.search = true;
+            $location.hash('top');
+            $anchorScroll();
         };
 
         $scope.selectSec = function(section){
