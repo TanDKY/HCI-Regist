@@ -17,19 +17,19 @@
 	</div>
 	<div class="container" ng-controller="mainCtrl" id="top">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-6 col-xs-8">
 				<h2>Kasetsart University</h2>
 			</div>
-			<div class="col-md-offset-3 col-md-3" ng-if="studentIdRoot !== ''" style="margin-top: 2%;">
+			<div class="col-md-offset-3 col-md-3 col-xs-4" ng-if="studentIdRoot !== ''" style="margin-top: 2%;">
 				<div class="row">
-					<div class="col-md-offset-2 col-md-10">Logged in as : {{studentIdRoot}}</div>
+					<div class="col-md-offset-2 col-md-10 col-xs-12">Logged in as : {{studentIdRoot}}</div>
 				</div>
 				<div class="col-md-offset-7 col-md-5">(<a ui-sref="login" ng-click="logout()">Logout</a>)</div>
 			</div>
 
-			<div class="col-md-offset-3 col-md-3" ng-if="studentIdRoot === ''" style="margin-top: 3%;">
+			<div class="col-md-offset-3 col-md-3 col-xs-4" ng-if="studentIdRoot === ''" style="margin-top: 3%;">
 				<div class="row">
-					<div class="col-md-offset-5 col-md-7">Not logged in (<a ui-sref="login">Login</a>)</div>
+					<div class="col-md-offset-5 col-md-7 col-xs-12">Not logged in (<a ui-sref="login">Login</a>)</div>
 				</div>
 			</div>
 		</div>

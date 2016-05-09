@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div class="col-md-8" >
+    <div class="col-md-8">
       <div class="panel panel-success">
         <div class="panel-heading">
           <h3 class="panel-title">
@@ -39,44 +39,48 @@
           <hr>
           <div ng-if="search === true">
             <h3 class="row">
-              <div class="col-md-9">{{course.name.en}}</div>
-              <div class="col-md-1">
+              <div class="col-md-9 col-xs-12">{{course.name.en}}</div>
+              <div class="col-md-1 col-xs-12">
                 <button class="btn btn-warning" data-toggle="modal" data-target="#descriptionModal">See Description</button>
               </div>
             </h3>
             <h4>Credits : {{courseCredit}}</h4>
             <br>
-            <table class="table table-reflow" ng-show="selected.length > 0">
-              <thead>
-                <tr>
-                  <th>Section</th>
-                  <th>Course Type</th>
-                  <th>Date</th>
-                  <th>Location</th>
-                  <th>Enrolled</th>
-                  <th>Instructor</th>
-                  <th ng-if="studentIdRoot !== ''">Enroll</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="s in selected">
-                  <td>{{s.id}}</td>
-                  <td>{{s.type}}</td>
-                  <td>{{s.date}}</td>
-                  <td>{{s.location}}</td>
-                  <td>{{s.enrolled}}/{{s.accept}}</td>
-                  <td>{{s.instructors[0]}}</td>
-                  <td align="center" ng-if="studentIdRoot !== ''">
-                    <div ng-if="checkEnroll[course.id] === undefined">
-                      <button ng-if="totalCredits + courseCredit <= 22" class="btn btn-primary" data-toggle="modal" data-target="#enrollModal" ng-click="selectSec(s)">Enroll</button>
-                      <button ng-if="totalCredits + courseCredit > 22" class="btn btn-primary" data-toggle="modal" data-target="#maxModal">Enroll</button>
-                    </div>
-                    <span ng-if="checkEnroll[course.id] !== undefined && checkEnroll[course.id] === s.id" class="glyphicon glyphicon-ok" style="color: green;"></span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
+            <div class="row">
+              <div class="col-md-12 col-xs-12">
+                <table class="table table-reflow" ng-show="selected.length > 0">
+                  <thead>
+                    <tr>
+                      <th>Section</th>
+                      <th>Course Type</th>
+                      <th>Date</th>
+                      <th>Location</th>
+                      <th>Enrolled</th>
+                      <th>Instructor</th>
+                      <th ng-if="studentIdRoot !== ''">Enroll</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="s in selected">
+                      <td>{{s.id}}</td>
+                      <td>{{s.type}}</td>
+                      <td>{{s.date}}</td>
+                      <td>{{s.location}}</td>
+                      <td>{{s.enrolled}}/{{s.accept}}</td>
+                      <td>{{s.instructors[0]}}</td>
+                      <td align="center" ng-if="studentIdRoot !== ''">
+                        <div ng-if="checkEnroll[course.id] === undefined">
+                          <button ng-if="totalCredits + courseCredit <= 22" class="btn btn-primary" data-toggle="modal" data-target="#enrollModal" ng-click="selectSec(s)">Enroll</button>
+                          <button ng-if="totalCredits + courseCredit > 22" class="btn btn-primary" data-toggle="modal" data-target="#maxModal">Enroll</button>
+                        </div>
+                        <span ng-if="checkEnroll[course.id] !== undefined && checkEnroll[course.id] === s.id" class="glyphicon glyphicon-ok" style="color: green;"></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
             <h4 ng-if="selected.length === 0">
               Not opened in this semester
               <hr>
@@ -174,8 +178,8 @@
           <h4 class="modal-title" id="myModalLabel">Max credit exceed</h4>
         </div>
         <div class="modal-body">
-          You have enroll exceeded the maximum credits.<br>
-          Please contact ... .
+          You have enroll exceeded the maximum credits.
+          <br> Please contact ... .
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
