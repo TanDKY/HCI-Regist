@@ -41,10 +41,19 @@ app.controller('loginCtrl', ['$scope', '$http', '$rootScope', '$localStorage', '
 		  }
         $rootScope.studentId = '';
         $scope.id = '';
+        $scope.errorMessage = '';
+        $scope.password = '';
+        $scope.submit = false;
 
         $scope.login = function() {
-          $rootScope.studentIdRoot = $scope.id;
-          $localStorage.studentId = $scope.id;
+          if($scope.id.length !== 10 || $scope.id.substr(2,4) !== '1054'){
+            $scope.errorMessage = 'Unautorized user (Not SKE student)';
+          }
+          else{
+            $rootScope.studentIdRoot = $scope.id;
+            $localStorage.studentId = $scope.id;
+            $state.go('profile');
+          }
         };
     }
 ]);

@@ -1,13 +1,19 @@
 <div ng-controller="loginCtrl">
-  <form id="form">
+  <form id="form" name="loginForm">
   <div class="form-group">
     <label for="exampleInputEmail1">Student Id</label>
-    <input style="width: 50%;" type="text" class="form-control" placeholder="Student Id" ng-model="id">
+    <input name="email" style="width: 50%;" type="text" class="form-control" placeholder="Student Id" ng-model="id" ng-pattern="/^[0-9]+$/">
+    <div style="color: red; margin-top: 5px;" ng-if="loginForm.email.$error.pattern">
+      Invalid student id
+    </div>
+    <div style="color: red; margin-top: 5px;" ng-if="errorMessage !== ''">
+      {{errorMessage}}
+    </div>
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>
-    <input style="width: 50%;" type="password" class="form-control" placeholder="Password">
+    <input name="password" style="width: 50%;" type="password" class="form-control" placeholder="Password" ng-model="password" ng-required="required">
   </div>
-  <button align="center" type="submit" class="btn btn-primary" ng-click="login()" ui-sref="profile">Login</button>
+  <button align="center" type="submit" class="btn btn-primary" ng-click="login()" ng-disabled="loginForm.email.$error.pattern || loginForm.password.$error.required">Login</button>
 </form>
 </div>
